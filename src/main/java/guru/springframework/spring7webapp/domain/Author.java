@@ -1,9 +1,8 @@
 package guru.springframework.spring7webapp.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity //maps this class to a database table
 public class Author {
@@ -13,6 +12,17 @@ public class Author {
     private Long id; //used to persist author objects into database
     private String firstName;
     private String lastName;
+
+    @ManyToMany(mappedBy = "authors") //mapped by the authors property of books
+    private Set<Book> books; //create Set of books (no duplicates + no order)
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     public Long getId() {
         return id;

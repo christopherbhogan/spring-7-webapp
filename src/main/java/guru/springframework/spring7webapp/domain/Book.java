@@ -1,9 +1,8 @@
 package guru.springframework.spring7webapp.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Book {
@@ -13,6 +12,19 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
+
+    @ManyToMany // create many books to many authors relationship
+    @JoinTable(name = "author_id", joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> authors; //create Set of authors (no duplicates + no order)
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 
     public Long getId() {
         return id;
