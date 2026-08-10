@@ -2,6 +2,7 @@ package guru.springframework.spring7webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity //maps this class to a database table
@@ -14,7 +15,7 @@ public class Author {
     private String lastName;
 
     @ManyToMany(mappedBy = "authors") //mapped by the authors property of books
-    private Set<Book> books; //create Set of books (no duplicates + no order)
+    private Set<Book> books = new HashSet<>(); //create Set of books (no duplicates + no order)
 
     public Set<Book> getBooks() {
         return books;

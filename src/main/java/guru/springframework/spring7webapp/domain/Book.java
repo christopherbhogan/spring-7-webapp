@@ -2,6 +2,7 @@ package guru.springframework.spring7webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,7 @@ public class Book {
     @ManyToMany // create many books to many authors relationship
     @JoinTable(name = "author_id", joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors; //create Set of authors (no duplicates + no order)
+    private Set<Author> authors = new HashSet<>(); //create Set of authors (no duplicates + no order)
 
     public Set<Author> getAuthors() {
         return authors;
