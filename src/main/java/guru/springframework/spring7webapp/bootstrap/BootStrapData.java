@@ -2,8 +2,10 @@ package guru.springframework.spring7webapp.bootstrap;
 
 import guru.springframework.spring7webapp.domain.Author;
 import guru.springframework.spring7webapp.domain.Book;
+import guru.springframework.spring7webapp.domain.Publisher;
 import guru.springframework.spring7webapp.repositories.AuthorRepository;
 import guru.springframework.spring7webapp.repositories.BookRepository;
+import guru.springframework.spring7webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,12 @@ public class BootStrapData implements CommandLineRunner {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootStrapData(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BootStrapData(BookRepository bookRepository, AuthorRepository authorRepository, PublisherRepository publisherRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -48,8 +52,18 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
 
+        Publisher macPublishing = new Publisher();
+        macPublishing.setPublisherName("Mac Publishing");
+        macPublishing.setAddress("7667 Maysweet Dr.");
+        macPublishing.setCity("San Francisco");
+        macPublishing.setState("CA");
+        macPublishing.setZip("90210");
+
+        Publisher macPublishingSaved = publisherRepository.save(macPublishing);
+
         System.out.println("In Bootstrap");
         System.out.println("Author Count: "  + authorRepository.count());
         System.out.println("Book Count: "  + bookRepository.count());
+        System.out.println("Publisher Count: "  + publisherRepository.count());
     }
 }
