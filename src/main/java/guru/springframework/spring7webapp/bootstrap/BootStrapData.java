@@ -32,9 +32,6 @@ public class BootStrapData implements CommandLineRunner {
         ddd.setTitle("Domain Driven Design");
         ddd.setIsbn("123456");
 
-        Author ericSaved = authorRepository.save(eric);
-        Book dddSaved = bookRepository.save(ddd);
-
         Author rod = new Author();
         rod.setFirstName("Rod");
         rod.setLastName("Johnson");
@@ -43,14 +40,13 @@ public class BootStrapData implements CommandLineRunner {
         noEBJ.setTitle("J2EE Development with EJB");
         noEBJ.setIsbn("456789");
 
+        Author ericSaved = authorRepository.save(eric);
+        Book dddSaved = bookRepository.save(ddd);
         Author rodSaved = authorRepository.save(rod);
         Book noEBJSaved = bookRepository.save(noEBJ);
 
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEBJSaved);
-
-        authorRepository.save(ericSaved);
-        authorRepository.save(rodSaved);
 
         Publisher macPublishing = new Publisher();
         macPublishing.setPublisherName("Mac Publishing");
@@ -58,8 +54,15 @@ public class BootStrapData implements CommandLineRunner {
         macPublishing.setCity("San Francisco");
         macPublishing.setState("CA");
         macPublishing.setZip("90210");
-
         Publisher macPublishingSaved = publisherRepository.save(macPublishing);
+
+        dddSaved.setPublisher(macPublishingSaved);
+        noEBJSaved.setPublisher(macPublishingSaved);
+
+        authorRepository.save(ericSaved);
+        authorRepository.save(rodSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEBJSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: "  + authorRepository.count());
